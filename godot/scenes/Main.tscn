@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/npc.gd" id="1_npc"]
+[ext_resource type="Script" path="res://scripts/chat_ui.gd" id="2_ui"]
+
+[node name="Main" type="Node"]
+
+[node name="NPC_Alex" type="Node" parent="."]
+script = ExtResource("1_npc")
+npc_name = "Alex"
+personality = "Friendly, helpful, and familiar with the local game world."
+location = "Downtown"
+
+[node name="ChatUI" type="CanvasLayer" parent="."]
+script = ExtResource("2_ui")
+npc_path = NodePath("../NPC_Alex")
+
+[node name="Panel" type="Panel" parent="ChatUI"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChatUI/Panel"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 1256.0
+offset_bottom = 696.0
+
+[node name="ChatLog" type="RichTextLabel" parent="ChatUI/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 580)
+bbcode_enabled = true
+fit_content = true
+text = "[b]Alex AI NPC[/b]\nTalk to Alex below."
+
+[node name="Input" type="LineEdit" parent="ChatUI/Panel/VBoxContainer"]
+placeholder_text = "Type a message..."
+
+[node name="SendButton" type="Button" parent="ChatUI/Panel/VBoxContainer"]
+text = "Send"
