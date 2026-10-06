@@ -1,79 +1,51 @@
-# Godot-OpenAI-AI-NPC
+# Godot OpenAI AI NPC + AI Builder
 
-A phone-friendly Godot 4 starter project for connecting an AI NPC to OpenAI through a small FastAPI backend.
+Phone-friendly Godot 4 project for an AI NPC plus a natural-language Godot project builder.
 
 ## Architecture
 
-Godot Android -> HTTPS backend -> OpenAI Responses API -> NPC response
+Godot Editor -> AI Builder plugin -> FastAPI backend -> OpenAI -> structured project plan -> safe Godot file writes
 
-The OpenAI API key stays on the backend. Do not put an OpenAI API key inside the Godot project or Android APK.
+Android gameplay -> HTTPS backend -> OpenAI -> NPC response
 
-## Repository layout
+The OpenAI API key stays on the backend. Never put it inside the Godot project or Android APK.
 
-- `godot/` - Godot project, NPC controller, HTTP client, and starter chat scene.
-- `backend/` - FastAPI service that talks to OpenAI.
-- `.env.example` - backend configuration template.
+## AI Builder
 
-## Backend setup
+1. Open the `godot/` folder in Godot 4.
+2. Start the FastAPI backend.
+3. Enable **AI Builder** under Project > Project Settings > Plugins.
+4. Open the **Godot AI Builder** dock.
+5. Enter a request such as: "Create a shop scene with lights, shelves and an NPC cashier."
+6. Click **Build with AI**.
+
+The builder returns a structured plan containing complete Godot project files. The editor plugin validates paths, writes allowed Godot files, and refreshes the filesystem.
+
+## Backend
 
 Copy `backend/.env.example` to `backend/.env` and set:
 
-```text
+```
 OPENAI_API_KEY=...
 OPENAI_MODEL=...
 ```
 
-Install dependencies:
+Install and run:
 
-```bash
+```
+cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-Check:
+Health check: `GET /health`
 
-```text
-GET /health
-```
+## Android
 
-Expected response:
+For a deployed Android build, use a deployed HTTPS backend URL instead of `127.0.0.1`. Keep the API key server-side.
 
-```json
-{"status":"ok"}
-```
+## Safety boundary
 
-## Godot setup
-
-Open the `godot/` directory as a Godot project.
-
-The starter scene is:
-
-```text
-Main
-├── NPC_Alex
-└── ChatUI
-```
-
-The NPC controller uses the autoloaded `AIClient`.
-
-For Android, enable the Godot Android export `INTERNET` permission before using the networked NPC.
-
-## Android deployment
-
-Do not use `127.0.0.1` for a deployed Android build unless the backend is actually running on the same phone. For a real phone deployment, set `AIClient.backend_url` to your deployed HTTPS backend.
-
-## Planned upgrades
-
-1. Structured NPC actions
-2. Persistent game memory
-3. Quests and world-state tools
-4. NavigationAgent3D movement
-5. Voice input/output
-6. Multiple NPCs
-7. NPC relationship and reputation systems
-
-## Security
-
-Never commit `backend/.env` or API keys. Use server-side secrets and HTTPS in production.
+The builder only accepts project-relative paths and allows Godot project text formats. It does not provide shell execution or arbitrary filesystem deletion.
