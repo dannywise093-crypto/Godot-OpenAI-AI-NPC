@@ -1,0 +1,31 @@
+[gd_scene format=3]
+
+[node name="AIBuilder" type="PanelContainer"]
+custom_minimum_size = Vector2(360, 0)
+
+[node name="Margin" type="MarginContainer" parent="."]
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+text = "Godot AI Builder"
+
+[node name="Prompt" type="TextEdit" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 120)
+placeholder_text = "Create a shop with lights, shelves and an NPC cashier."
+
+[node name="Context" type="TextEdit" parent="Margin/VBox"]
+custom_minimum_size = Vector2(0, 80)
+placeholder_text = "Optional project context"
+
+[node name="Generate" type="Button" parent="Margin/VBox"]
+text = "Build with AI"
+
+[node name="Output" type="RichTextLabel" parent="Margin/VBox"]
+bbcode_enabled = true
+fit_content = true
+text = "Ready."
