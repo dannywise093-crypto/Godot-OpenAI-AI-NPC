@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.godot/
+.import/
+export.cfg
+export_presets.cfg
