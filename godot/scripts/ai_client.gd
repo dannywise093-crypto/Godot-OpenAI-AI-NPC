@@ -1,4 +1,3 @@
-class_name AIClient
 extends Node
 
 signal response_received(text: String, response_id: String)
